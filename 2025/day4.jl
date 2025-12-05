@@ -14,7 +14,7 @@ let L=140, W=140, count=0, table=Array{Bool}(undef, L, W), y=1, x=1
         return filled < 4
     end
 
-    for line in readlines("2025/inputs/4-simple.txt")
+    for line in readlines("2025/inputs/4.txt")
         x=1
         for char in line
             table[y,x] = (char == '@')
@@ -23,6 +23,7 @@ let L=140, W=140, count=0, table=Array{Bool}(undef, L, W), y=1, x=1
         y += 1
     end
     movable = map(hasRoom, repeat(1:W, inner=L), repeat(1:L, outer=W))
-    return sum(movable)
+    print(sum(movable))
     # 1163 - too low
+    # 1569 - correct
 end
