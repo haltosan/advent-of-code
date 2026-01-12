@@ -32,11 +32,14 @@ function partOne()
 end
 
 # depth first search
-let tot = 0, lines = readlines("inputs/7.txt")
+let tot = 0, lines = readlines("inputs/7.txt"), cache = Dict()
 	startI = findnext('S', lines[begin], firstindex(lines[begin]))
 	startLine = firstindex(lines) + 1
 	print("bounds $(lastindex(lines[begin])) $(lastindex(lines))\n")
 	function dfs(i, lineI)
+		if (i, lineI) in keys(cache)
+			return cache[i, lineI]
+		end
 		if lineI > lastindex(lines)
 			return 1
 		end
@@ -44,9 +47,13 @@ let tot = 0, lines = readlines("inputs/7.txt")
 			return 0
 		end
 		if lines[lineI][i] == '.'
-			return dfs(i, lineI+1)
+			ans = dfs(i, lineI+1)
+			cache[i, lineI] = ans
+			return ans
 		else
-			return dfs(i-1, lineI+1) + dfs(i+1, lineI+1)
+			ans = dfs(i-1, lineI+1) + dfs(i+1, lineI+1)
+			cache[i, lineI] = ans
+			return ans
 		end
 	end
 	tot = dfs(startI, startLine)
