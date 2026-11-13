@@ -64,6 +64,10 @@ function area(a::Point, b::Point)
 	(1+abs(a.x-b.x)) * (1+abs(a.y-b.y))
 end
 
+function isValid(corners)
+	false
+end
+
 let mx = -1, points = [parseLine2(i) for i in readlines("inputs/9.txt")], lines = []
 	for xi in firstindex(points):1:lastindex(points)-1
 		x = points[xi]
@@ -76,7 +80,7 @@ let mx = -1, points = [parseLine2(i) for i in readlines("inputs/9.txt")], lines 
 		for yi in xi+1:1:lastindex(points)
 			y = points[yi]
 			corners = [Point(x.x, y.y), Point(y.x, x.y)]
-			if all(p -> any(line -> onLine(p, line), lines), corners)
+			if isValid(corners)
 				a = area(x,y)
 				if a > mx
 					mx = a
@@ -85,4 +89,7 @@ let mx = -1, points = [parseLine2(i) for i in readlines("inputs/9.txt")], lines 
 		end
 	end
 	print("max $(mx)\n")
-end  # 199444724 - wrong
+end
+
+# above 199444724
+# below 4763932976
